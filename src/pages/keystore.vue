@@ -3,7 +3,7 @@
         <v-card>
             <v-list>
                 <v-subheader>{{$i18n.getMessage('MY_KEYSTORE')}}
-                    <v-btn class="mx-2" fab dark small color="primary" @click="showAddKeystore = true">
+                    <v-btn class="mx-2" fab dark small color="primary" @click="addKeystore">
                         <v-icon dark>mdi-plus</v-icon>
                     </v-btn>
                 </v-subheader>
@@ -29,8 +29,8 @@
                                         <v-icon v-if="item.show">mdi-eye-off</v-icon>
                                         <v-icon v-else>mdi-eye</v-icon>
                                     </v-btn>
-                                    <v-btn color="error" text fab small @click="editKeystore(i)">
-                                        <font-awesome-icon :icon="['fas', 'edit']" color="green" style="font-size: 20px;" />
+                                    <v-btn color="green" text fab small @click="editKeystore(i)">
+                                        <font-awesome-icon :icon="['fas', 'edit']" style="font-size: 20px;" />
                                     </v-btn>
                                     <v-btn color="error" text fab small @click="showConfirm(i)">
                                         <v-icon>mdi-delete</v-icon>
@@ -47,13 +47,12 @@
             </v-list>
         </v-card>
 
-        <add-keystore v-model="showAddKeystore" :item="editItem" :on-success="onAddKeyStoreSuccess"/>
+        <add-keystore v-model="showAddKeystore" :current-index="currentIndex" :item="editItem" :on-success="onAddKeyStoreSuccess"/>
         <confirm v-model="confirmDialog" :title="$i18n.getMessage('CONFIRM_TITLE')" :message="$i18n.getMessage('CONFIRM_DELETE')" :on-success="onConfirmSuccess"/>
     </v-container>
 </template>
 
 <script>
-  import '../styles/global.scss'
   import AddKeystore from '../components/dialog/AddKeystore'
   import Confirm from '../components/dialog/Confirm'
 
@@ -111,7 +110,12 @@
       },
       editKeystore(n){
         this.editItem = this.seeds[n]
-        console.log(this.editItem)
+        this.currentIndex = n
+        this.showAddKeystore = true
+      },
+      addKeystore(){
+        this.currentIndex = undefined
+        this.editItem = undefined
         this.showAddKeystore = true
       }
     }

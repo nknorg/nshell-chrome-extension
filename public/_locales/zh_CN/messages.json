@@ -14,6 +14,15 @@
   "ADD_KEYSTORE": {
     "message": "添加身份"
   },
+  "EDIT_KEYSTORE": {
+    "message": "编辑 Keystore"
+  },
+  "ADD_NSHELL": {
+    "message": "添加 nShell"
+  },
+  "EDIT_NSHELL": {
+    "message": "编辑 nShell"
+  },
   "REQUIRED": {
     "message": "必填项"
   },
@@ -48,5 +57,23 @@
   },
   "CONFIRM_DELETE": {
     "message": "确认要删除此项吗?"
+  },
+  "SERVER_ADDRESS": {
+    "message": "Server Address"
+  },
+  "CLIENT_ADDRESS": {
+    "message": "Client Address"
+  },
+  "ADDRESS": {
+    "message": "Address"
+  },
+  "IDENTIFIER": {
+    "message": "Identifier"
+  },
+  "CLIENT": {
+    "message": "Client"
+  },
+  "NAME": {
+    "message": "名称"
   }
 }

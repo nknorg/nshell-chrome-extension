@@ -21,10 +21,10 @@
             </v-btn>
 
             <v-divider class="mx-4" inset vertical/>
-            <v-btn icon>
+            <v-btn icon @click="newTab">
                 <v-icon>mdi-tab</v-icon>
             </v-btn>
-            <v-btn icon>
+            <v-btn icon @click="newWindow">
                 <v-icon large>mdi-fullscreen</v-icon>
             </v-btn>
         </v-app-bar>
@@ -48,10 +48,14 @@
       }
     },
     methods: {
-      test() {
-        // this.message= this.$bg.test()
+      newWindow() {
         chrome.windows.create({'url': chrome.extension.getURL('popup.html'), type: 'popup'}, function (tab) {
-          console.log(tab)
+
+        })
+      },
+      newTab(){
+        chrome.tabs.create({'url': chrome.extension.getURL('popup.html')}, function (tab) {
+
         })
       }
     }

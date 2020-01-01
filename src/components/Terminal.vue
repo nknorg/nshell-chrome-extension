@@ -1,5 +1,5 @@
 <template>
-  <div ref="terminal" style="width:100%;"></div>
+  <div ref="terminal"></div>
 </template>
 <script>
   import { Terminal } from 'xterm'

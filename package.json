@@ -10,6 +10,8 @@
   "dependencies": {
     "core-js": "^2.6.5",
     "moment": "^2.24.0",
+    "nkn-multiclient": "^0.1.0",
+    "nkn-wallet": "^0.4.8",
     "register-service-worker": "^1.6.2",
     "vue": "^2.6.10",
     "vue-json-pretty": "^1.6.3",

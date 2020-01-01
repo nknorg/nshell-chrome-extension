@@ -1,0 +1,52 @@
+{
+  "language": {
+    "message": "简体中文"
+  },
+  "extensionName": {
+    "message": "nShell"
+  },
+  "extensionDescription": {
+    "message": "nShell."
+  },
+  "MY_KEYSTORE": {
+    "message": "我的身份"
+  },
+  "ADD_KEYSTORE": {
+    "message": "添加身份"
+  },
+  "REQUIRED": {
+    "message": "必填项"
+  },
+  "FIELD_REQUIRED": {
+    "message": "$field$ 是必须的",
+    "placeholders": {
+      "field": {
+        "content": "$1"
+      }
+    }
+  },
+  "OK": {
+    "message": "确定"
+  },
+  "CANCEL": {
+    "message": "取消"
+  },
+  "SUBMIT": {
+    "message": "提交"
+  },
+  "TAG": {
+    "message": "Tag"
+  },
+  "SEED": {
+    "message": "Seed"
+  },
+  "INVALID_SEED": {
+    "message": "Seed 格式不正确"
+  },
+  "CONFIRM_TITLE": {
+    "message": "提示"
+  },
+  "CONFIRM_DELETE": {
+    "message": "确认要删除此项吗?"
+  }
+}

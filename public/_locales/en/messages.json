@@ -1,0 +1,52 @@
+{
+  "language": {
+    "message": "English"
+  },
+  "extensionName": {
+    "message": "nShell"
+  },
+  "extensionDescription": {
+    "message": "nShell."
+  },
+  "MY_KEYSTORE": {
+    "message": "My Keystore"
+  },
+  "ADD_KEYSTORE": {
+    "message": "Add Keystore"
+  },
+  "REQUIRED": {
+    "message": "Required"
+  },
+  "FIELD_REQUIRED": {
+    "message": "$field$ is required",
+    "placeholders": {
+      "field": {
+        "content": "$1"
+      }
+    }
+  },
+  "OK": {
+    "message": "OK"
+  },
+  "CANCEL": {
+    "message": "Cancel"
+  },
+  "SUBMIT": {
+    "message": "Submit"
+  },
+  "TAG": {
+    "message": "Tag"
+  },
+  "SEED": {
+    "message": "Seed"
+  },
+  "INVALID_SEED": {
+    "message": "Invalid Seed"
+  },
+  "CONFIRM_TITLE": {
+    "message": "Info"
+  },
+  "CONFIRM_DELETE": {
+    "message": "Are you sure want to delete it?"
+  }
+}

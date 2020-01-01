@@ -1,0 +1,9 @@
+body{
+  overflow-x: auto;
+}
+#app {
+  min-width: 800px;min-height: 500px;
+}
+.v-list-item:nth-of-type(odd) {
+  background-color: rgba(0, 0, 0, .01);
+}

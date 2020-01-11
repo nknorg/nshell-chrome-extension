@@ -40,6 +40,9 @@
   "CANCEL": {
     "message": "Cancel"
   },
+  "NEXT": {
+    "message": "Next"
+  },
   "SUBMIT": {
     "message": "Submit"
   },
@@ -48,6 +51,9 @@
   },
   "SEED": {
     "message": "Seed"
+  },
+  "KEYSTORE": {
+    "message": "Keystore"
   },
   "INVALID_SEED": {
     "message": "Invalid Seed"
@@ -60,6 +66,9 @@
   },
   "SERVER_ADDRESS": {
     "message": "Server Address"
+  },
+  "REMOTE_ADDRESS": {
+    "message": "Remote Address"
   },
   "CLIENT_ADDRESS": {
     "message": "Client Address"
@@ -75,5 +84,21 @@
   },
   "NAME": {
     "message": "Name"
+  },
+  "WALLET": {
+    "message": "Wallet"
+  },
+  "UPLOAD_WALLET": {
+    "message": "Upload wallet file"
+  },
+  "PASSWORD": {
+    "message": "Password"
+  },
+  "PASSWORD_HINT": {
+    "message": "Please enter wallet password."
+  },
+  "PASSWORD_ERROR": {
+    "message": "Invalid password."
   }
+
 }

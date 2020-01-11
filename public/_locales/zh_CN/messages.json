@@ -40,6 +40,9 @@
   "CANCEL": {
     "message": "取消"
   },
+  "NEXT": {
+    "message": "下一步"
+  },
   "SUBMIT": {
     "message": "提交"
   },
@@ -48,6 +51,9 @@
   },
   "SEED": {
     "message": "Seed"
+  },
+  "KEYSTORE": {
+    "message": "Keystore"
   },
   "INVALID_SEED": {
     "message": "Seed 格式不正确"
@@ -60,6 +66,9 @@
   },
   "SERVER_ADDRESS": {
     "message": "Server Address"
+  },
+  "REMOTE_ADDRESS": {
+    "message": "Remote Address"
   },
   "CLIENT_ADDRESS": {
     "message": "Client Address"
@@ -75,5 +84,20 @@
   },
   "NAME": {
     "message": "名称"
+  },
+  "WALLET": {
+    "message": "钱包"
+  },
+  "UPLOAD_WALLET": {
+    "message": "上传钱包文件"
+  },
+  "PASSWORD": {
+    "message": "密码"
+  },
+  "PASSWORD_HINT": {
+    "message": "请输入钱包密码."
+  },
+  "PASSWORD_ERROR": {
+    "message": "密码错误."
   }
 }

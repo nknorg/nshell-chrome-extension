@@ -6,8 +6,8 @@
                     <span class="headline" v-if="currentIndex!=null && currentIndex>-1">{{$i18n.getMessage('EDIT_NSHELL')}}</span>
                     <span class="headline" v-else>{{$i18n.getMessage('ADD_NSHELL')}}</span>
                     <v-spacer/>
-                    <v-btn class="mr-0" icon small @click="cancel">
-                        <v-icon class="fas fa-times" color="grey darken-2" small/>
+                    <v-btn class="mr-0" icon @click="cancel">
+                        <font-awesome-icon :icon="['fas', 'times']" style="font-size: 20px;"/>
                     </v-btn>
                 </v-card-title>
                 <v-divider/>
@@ -19,10 +19,10 @@
                             :rules="[$rules.fieldRequired($i18n.getMessage('NAME'))]"
                     />
                     <v-text-field
-                            v-model="serverAddr"
-                            :label="$i18n.getMessage('SERVER_ADDRESS')"
+                            v-model="remoteAddr"
+                            :label="$i18n.getMessage('REMOTE_ADDRESS')"
                             persistent-hint
-                            :rules="[$rules.fieldRequired($i18n.getMessage('SERVER_ADDRESS'))]"
+                            :rules="[$rules.fieldRequired($i18n.getMessage('REMOTE_ADDRESS'))]"
                     />
 
                     <v-row>
@@ -64,6 +64,7 @@
 <script>
   import SeedSelect from '../../components/widget/SeedSelect'
   import Seed from '../../pages/keystore'
+  import { isSeed, rules } from '../../helpers/validation.helper'
 
   export default {
     name: 'AddNShell',
@@ -85,9 +86,9 @@
     },
     data() {
       return {
-        visible: this.value,
+        visible: false,
         name: '',
-        serverAddr: '',
+        remoteAddr: '',
         identifier: '',
         seed: '',
         tags: []
@@ -102,12 +103,17 @@
       },
       item(val) {
         if (val) {
-          this.seed = val.seed
+          if(val.seed){
+            this.seed = val.seed
+          }else if(val.keystore){
+            this.seed = val.keystore
+          }
+
           this.name = val.name
-          this.serverAddr = val.serverAddr
+          this.remoteAddr = val.remoteAddr
           this.identifier = val.identifier
           this.tags = val.tags
-        }else{
+        } else {
           this.init()
         }
       }
@@ -116,7 +122,7 @@
     methods: {
       init() {
         this.name = ''
-        this.serverAddr = ''
+        this.remoteAddr = ''
         this.identifier = ''
         this.seed = ''
         this.tags = []
@@ -128,11 +134,17 @@
         if (this.$refs.form.validate()) {
           let data = {
             name: this.name,
-            serverAddr: this.serverAddr,
+            remoteAddr: this.remoteAddr,
             identifier: this.identifier,
-            seed: this.seed,
             tags: this.tags
           }
+
+          if (isSeed(this.seed) === true) {
+            data.seed = this.seed
+          } else {
+            data.keystore = this.seed
+          }
+
           if (this.currentIndex != null && this.currentIndex > -1) {
             await this.$syncStorage.setShell(this.currentIndex, data)
           } else {

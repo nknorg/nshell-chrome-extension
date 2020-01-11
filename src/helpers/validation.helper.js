@@ -4,3 +4,12 @@ export const rules = {
   fieldRequired: field => v => !!v || i18n.getMessage('FIELD_REQUIRED', [field]),
   seed: v => /^\w{64}$/.test(v) || i18n.getMessage('INVALID_SEED'),
 }
+
+
+export function isSeed(seed) {
+  let isSeed = rules.seed(seed)
+  if (isSeed === true) {
+   return true
+  }
+  return false
+}

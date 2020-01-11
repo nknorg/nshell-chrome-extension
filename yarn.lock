@@ -5144,10 +5144,10 @@ nice-try@^1.0.4:
   resolved "https://registry.yarnpkg.com/nice-try/-/nice-try-1.0.5.tgz#a3378a7696ce7d223e88fc9b764bd7ef1089e366"
   integrity sha512-1nh45deeb5olNY7eX82BkPO7SSxR5SSYJiPTrTdFUVYwAl8CKMA5N9PjTYkHiRjisVcxcQ1HXdLhx2qxxJzLNQ==
 
-nkn-client@^0.7.1:
-  version "0.7.1"
-  resolved "https://registry.yarnpkg.com/nkn-client/-/nkn-client-0.7.1.tgz#3102a060e421d8a845b0e6dca233bd785e3ce480"
-  integrity sha512-zHI4HM27/7fjFuVbH0Brf+HLkBeWjgv23w3AJIO61NRHzZs/HTf0S36LM2JTeaWl7KldYKMG3EGchCvbamIAsQ==
+nkn-client@^0.7.2:
+  version "0.7.2"
+  resolved "https://registry.yarnpkg.com/nkn-client/-/nkn-client-0.7.2.tgz#263a0fef0aea1ef456ac51f6fc354f2b8bc352d8"
+  integrity sha512-fqBOtxz5yMGezgigtIvCZR7zO55R1RhTftBVf1B4Io8ewaHSY7B1lC/6SPQHAhLa2rpEGjp/FssH8ehmfiogAg==
   dependencies:
     buffer "^5.2.1"
     cross-fetch "^2.2.2"
@@ -5161,13 +5161,13 @@ nkn-client@^0.7.1:
     tweetnacl "^1.0.1"
     ws "^5.2.0"
 
-nkn-multiclient@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/nkn-multiclient/-/nkn-multiclient-0.1.0.tgz#291c85de14729728b0a8a5f7f9343c32ebdeb5e7"
-  integrity sha512-TzUdIwcp8W/Uj9tA87ZZYEnpx9hqYyFmKmxOkmfRcLfEoOWKqXKHVokZ5M6tezKPoDRqQ7ldV2WTrGQId9KY1A==
+nkn-multiclient@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/nkn-multiclient/-/nkn-multiclient-0.1.1.tgz#92e2ffe9856f9b6ba662f042006349bf3692fc81"
+  integrity sha512-ZMxC8nqzHB92h64fkUi2qdS/5tVTmvHzpe0URmjZrsGcym4Un+iTDuTOsn3pWFBt1Rf+nfJW46WsZhp9QT5dXw==
   dependencies:
     memory-cache "^0.2.0"
-    nkn-client "^0.7.1"
+    nkn-client "^0.7.2"
 
 nkn-wallet@^0.4.8:
   version "0.4.8"

@@ -7,19 +7,26 @@
                     <v-card-text>
                         <h3>{{item.name}}</h3>
 
-                        <v-text-field v-model="item.serverAddr"
-                                      :label="$i18n.getMessage('SERVER_ADDRESS')"
+                        <v-text-field v-model="item.remoteAddr"
+                                      :label="$i18n.getMessage('REMOTE_ADDRESS')"
                                       persistent-hint
                                       hide-details
                                       readonly
                         />
 
-                        <v-text-field :value="item.identifier +'.' + item.publicKey"
+                        <v-text-field v-if="item.seed" :value="item.identifier +'.' + item.publicKey"
                                       :label="$i18n.getMessage('CLIENT_ADDRESS')"
                                       persistent-hint
                                       hide-details
                                       readonly
                         />
+                        <v-text-field v-else-if="item.keystore" :value="item.identifier"
+                                      :label="$i18n.getMessage('CLIENT') + ' ' + $i18n.getMessage('IDENTIFIER')"
+                                      persistent-hint
+                                      hide-details
+                                      readonly
+                        />
+
                         <v-layout class="mt-2">
                             <v-chip class="mx-1" small v-for="tag in item.tags">{{tag}}</v-chip>
                         </v-layout>
@@ -34,7 +41,9 @@
                         </v-btn>
 
                         <v-spacer/>
-                        <v-btn color="primary" text :to="'/terminal/' + i" target="_blank">Connect</v-btn>
+                        <v-btn v-if="item.seed" color="primary" text :to="'/terminal/' + i" target="_blank">Connect
+                        </v-btn>
+                        <v-btn v-else-if="item.keystore" color="primary" text @click="connect(i)">Connect</v-btn>
                     </v-card-actions>
                 </v-card>
             </v-col>
@@ -63,24 +72,30 @@
                      :on-success="onAddKeyStoreSuccess"/>
         <confirm v-model="confirmDialog" :title="$i18n.getMessage('CONFIRM_TITLE')"
                  :message="$i18n.getMessage('CONFIRM_DELETE')" :on-success="onConfirmSuccess"/>
+        <verification-password v-model="showVerificationPasswordDialog" :validate="validate"
+                               :on-success="onValidateSuccess"/>
     </v-container>
 </template>
 
 <script>
   import AddNShell from '../components/dialog/AddNShell'
   import Confirm from '../components/dialog/Confirm'
+  import VerificationPassword from '../components/dialog/VerificationPassword'
   import Wallet from 'nkn-wallet'
+  import { parseKeystore } from '../helpers/utils.helper'
 
   export default {
     name: 'index',
-    components: {AddNShell, Confirm},
+    components: {AddNShell, Confirm, VerificationPassword},
     data() {
       return {
         shells: [],
+        showVerificationPasswordDialog: false,
         confirmDialog: false,
         showAddNShell: false,
         editItem: undefined,
-        currentIndex: undefined
+        currentIndex: undefined,
+        validate: undefined
       }
     },
     async created() {
@@ -91,13 +106,18 @@
         this.currentIndex = undefined
         this.editItem = undefined
         this.shells = await this.$syncStorage.getShell()
-        this.shells.map(x => {
-          try {
-            x.publicKey = Wallet.restoreWalletBySeed(x.seed, '').getPublicKey()
-          } catch (e) {
-            console.log(e)
-          }
 
+        this.shells.map(x => {
+          if (x.seed) {
+            try {
+              x.publicKey = Wallet.restoreWalletBySeed(x.seed, '').getPublicKey()
+            } catch (e) {
+              console.log(e)
+            }
+          } else if (x.keystore) {
+            let keystore = parseKeystore(x.keystore)
+
+          }
         })
       },
       onAddKeyStoreSuccess() {
@@ -119,10 +139,37 @@
         this.currentIndex = n
         this.showAddNShell = true
       },
-      addNShell(){
+      addNShell() {
         this.currentIndex = undefined
         this.editItem = undefined
         this.showAddNShell = true
+      },
+      connect(n) {
+        let shell = this.shells[n]
+        if (shell.keystore) {
+          this.showVerificationPasswordDialog = true
+          this.validate = (pass) => {
+            try {
+              let wallet = Wallet.loadJsonWallet(shell.keystore, pass)
+              this.$router.push({name: 'terminal', params: {seed:wallet.getSeed(), n: n}})
+              return true
+            } catch (e) {
+              return false
+            }
+          }
+        }
+
+      },
+      onValidateSuccess() {
+
+      },
+      openTerminal(params) {
+        const {href} = this.$router.resolve({
+          path: '/terminal',
+          ...params
+        })
+        window.open(href, '_blank')
+
       }
     }
   }

@@ -12,10 +12,16 @@
                         v-for="(item, i) in seeds"
                         :key="i"
                 >
-                    <v-list-item-content>
+                    <v-list-item-content v-if="!!item.seed">
                         <v-list-item-title>
                             <v-row align="center" justify="center">
                                 <v-col>
+                                    <v-text-field v-model="item.address"
+                                                  :label="$i18n.getMessage('ADDRESS')"
+                                                  persistent-hint
+                                                  hide-details
+                                                  readonly
+                                    />
                                     <v-text-field v-model="item.seedDisplay"
                                                   :label="$i18n.getMessage('SEED')"
                                                   persistent-hint
@@ -30,7 +36,34 @@
                                         <v-icon v-else>mdi-eye</v-icon>
                                     </v-btn>
                                     <v-btn color="green" text fab small @click="editKeystore(i)">
-                                        <font-awesome-icon :icon="['fas', 'edit']" style="font-size: 20px;" />
+                                        <font-awesome-icon :icon="['fas', 'edit']" style="font-size: 20px;"/>
+                                    </v-btn>
+                                    <v-btn color="error" text fab small @click="showConfirm(i)">
+                                        <v-icon>mdi-delete</v-icon>
+                                    </v-btn>
+                                </v-col>
+                            </v-row>
+                        </v-list-item-title>
+                        <v-list-item-subtitle>
+                            <v-chip class="mx-1" small v-for="tag in item.tags">{{tag}}</v-chip>
+                        </v-list-item-subtitle>
+                    </v-list-item-content>
+                    <v-list-item-content v-else>
+                        <v-list-item-title>
+                            <v-row align="center" justify="center">
+                                <v-col>
+                                    <v-text-field v-model="item.address"
+                                                  :label="$i18n.getMessage('ADDRESS')"
+                                                  persistent-hint
+                                                  hide-details
+                                                  readonly
+                                    />
+
+                                </v-col>
+                                <v-col class="shrink" align-self="end">
+
+                                    <v-btn color="green" text fab small @click="editKeystore(i)">
+                                        <font-awesome-icon :icon="['fas', 'edit']" style="font-size: 20px;"/>
                                     </v-btn>
                                     <v-btn color="error" text fab small @click="showConfirm(i)">
                                         <v-icon>mdi-delete</v-icon>
@@ -47,14 +80,18 @@
             </v-list>
         </v-card>
 
-        <add-keystore v-model="showAddKeystore" :current-index="currentIndex" :item="editItem" :on-success="onAddKeyStoreSuccess"/>
-        <confirm v-model="confirmDialog" :title="$i18n.getMessage('CONFIRM_TITLE')" :message="$i18n.getMessage('CONFIRM_DELETE')" :on-success="onConfirmSuccess"/>
+        <add-keystore v-model="showAddKeystore" :current-index="currentIndex" :item="editItem"
+                      :on-success="onAddKeyStoreSuccess"/>
+        <confirm v-model="confirmDialog" :title="$i18n.getMessage('CONFIRM_TITLE')"
+                 :message="$i18n.getMessage('CONFIRM_DELETE')" :on-success="onConfirmSuccess"/>
     </v-container>
 </template>
 
 <script>
   import AddKeystore from '../components/dialog/AddKeystore'
   import Confirm from '../components/dialog/Confirm'
+  import Wallet from 'nkn-wallet'
+  import { parseKeystore } from '../helpers/utils.helper'
 
   export default {
     name: 'seed',
@@ -78,10 +115,23 @@
     methods: {
       async init() {
         this.currentIndex = undefined
-        this.seeds = await this.$syncStorage.getSeed()
+        this.seeds = await this.$syncStorage.getSeeds()
+
         this.seeds.map(x => {
-          x.seedDisplay = x.seed.replace(/^(\w{3}).*(\w{3})$/, '$1**********************************************************$2')
-          x.show = false
+          if (x.seed) {
+            x.address = Wallet.restoreWalletBySeed(x.seed, '').address
+            x.seedDisplay = x.seed.replace(/^(\w{3}).*(\w{3})$/, '$1**********************************************************$2')
+            x.show = false
+          } else {
+            try {
+              let keystore = parseKeystore(x.keystore)
+              x.address = keystore.Address
+            } catch (e) {
+              console.log(e)
+            }
+
+          }
+
         })
       },
       onAddKeyStoreSuccess() {
@@ -108,12 +158,12 @@
         this.$set(this.seeds, n, item)
         item.show = !item.show
       },
-      editKeystore(n){
+      editKeystore(n) {
         this.editItem = this.seeds[n]
         this.currentIndex = n
         this.showAddKeystore = true
       },
-      addKeystore(){
+      addKeystore() {
         this.currentIndex = undefined
         this.editItem = undefined
         this.showAddKeystore = true

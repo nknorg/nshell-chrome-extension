@@ -9,6 +9,7 @@ const router = new VueRouter({
   routes: [
     { path: '/', component: Index },
     { path: '/keystore', component: Keystore },
+    { path: '/terminal', name:'terminal', component: Terminal },
     { path: '/terminal/:n', component: Terminal },
   ]
 })
